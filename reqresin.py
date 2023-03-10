@@ -186,11 +186,11 @@ def test_create_user():
     headers = {
         'Authorization':'Bearer '+tokenLogin, 'Content-Type':'application/json'
         } 
-    response = requests.get(url=baseUrl+path, headers=headers, data=payload)
+    response = requests.post(url=baseUrl+path, headers=headers, data=payload)
     assert response.status_code == 201
     print(response.text)   
     jsonResponse = response.json()
-    newUserID = jsonResponse['data']['id']
+    newUserID = jsonResponse['id']
 
 ####################################### Update User ##############################################
 def test_update_user():
@@ -199,7 +199,8 @@ def test_update_user():
     convert_randNum = str (randNum)
 
    
-    path ="api/users"+str(newUserID)
+    path ="api/users/"+str(newUserID)
+
 
     payload = json.dumps(
     {
@@ -210,8 +211,23 @@ def test_update_user():
     headers = {
         'Authorization':'Bearer '+tokenLogin, 'Content-Type':'application/json'
         } 
-    response = requests.get(url=baseUrl+path, headers=headers, data=payload)
-    assert response.status_code == 201
+    response = requests.put(url=baseUrl+path, headers=headers, data=payload)
+    assert response.status_code == 200
     print(response.text)       
+  
 
-    ##test
+####################################### Delete User ##############################################
+def test_delete_user():
+    global newUserID
+    randNum = random.randint(0, 1000)
+    convert_randNum = str (randNum)
+
+   
+    path ="api/users/"+str(newUserID)
+
+    headers = {
+        'Authorization':'Bearer '+tokenLogin, 'Content-Type':'application/json'
+        } 
+    response = requests.delete(url=baseUrl+path, headers=headers)
+    assert response.status_code == 204
+    print(response.text)  
