@@ -10,6 +10,19 @@ from pathlib import Path
 
 baseUrl = "https://reqres.in/"
 
+#### Example ####
+def test_list_user():
+    global tokenLogin
+   
+    path ="api/users?page=2"
+    headers = {
+        'Content-Type':'application/json'
+        } 
+    
+    response = requests.get(url=baseUrl+path, headers=headers)
+    assert response.status_code == 200
+    print(response.text)
+
 ####################################### Register ##############################################
 def test_register_success():
     path = "api/register"
